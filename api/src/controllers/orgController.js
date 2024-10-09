@@ -1,5 +1,4 @@
-let Orgs = [];
-let nextId = 1;
+const connect = require ('../db/connect')
 
 module.exports = class orgController {
   static async createOrg(req, res) {
@@ -16,19 +15,33 @@ module.exports = class orgController {
     } else if (!email.includes("@")) {
       return res.status(400).json({ error: "Email inválido. Deve conter @" });
     }
-
-    // Verifica se já existe um usuário com o mesmo CPF
-    const existingOrg = Orgs.find((org) => org.email === email);
-    if (existingOrg) {
-      return res.status(400).json({ error: "email já cadastrado" });
+    else{
+      // Construção da query INSERT
+      const query = `INSERT INTO organizador (telefone, password, email, name) VALUES(
+      '${telefone}',
+      '${password}',
+      '${email}',
+      '${name}')`;
+      // Executando a query criada
+      try{
+        connect.query(query, function(err){
+          if(err){
+            console.log(err)
+            console.log(err.code)
+            if(err.code === 'ER_DUP_ENTRY'){
+              return res.status(400).json({error:"O Email ja está vinculado a outro usuário",});
+            }else{
+              return res.status(500).json({error:"Erro interno do servidor",});
+            }
+          }else{
+            return res.status(201).json({message: "Usuário cadastrado com sucesso"})
+          }
+        });
+      }catch(error){
+        console.error(error);
+        res.status(500).json({error: "Erro interno do servidor"})
+      }
     }
-
-    // Cria e adiciona novo usuário
-    const newOrg = { id: nextId++, telefone, email, password, name };
-    Orgs.push(newOrg);
-    return res
-      .status(201)
-      .json({ message: "Usuário criado com sucesso", Org: newOrg });
   }
 
   static async getAllOrgs(req, res) {
@@ -70,7 +83,7 @@ module.exports = class orgController {
   //Atualiza os dados do usuário no Array 'users'
   Orgs[orgIndex] = {id, telefone, email, password, name }
   
-  return res.status(200).json({message: "Usuário atualizado", org:Orgs[orgIndex]})
+  return res.status(200).json({message: "Usuário atualizado"})
 }
 
 }
