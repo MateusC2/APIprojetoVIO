@@ -17,7 +17,7 @@ body {
 
 /* Estilo do cabeçalho */
 header {
-  background-color: #4caf50; /* Define a cor de fundo do cabeçalho */
+  background-color: hsl(122, 39%, 49%); /* Define a cor de fundo do cabeçalho */
   padding: 20px; /* Espaçamento interno */
   text-align: center; /* Centraliza o texto */
   color: white; /* Define a cor do texto no cabeçalho */
@@ -106,7 +106,7 @@ main section {
 
 /* Estilo do rodapé */
 footer {
-  background-color: #333; /* Cor de fundo escura */
+  background-color: #c4c4c4; /* Cor de fundo escura */
   color: white; /* Cor do texto do rodapé */
   text-align: center; /* Centraliza o texto */
   padding: 20px 0; /* Espaçamento interno no topo e na base */
