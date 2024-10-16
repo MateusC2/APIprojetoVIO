@@ -2,9 +2,9 @@ const connect = require ('../db/connect')
 
 module.exports = class orgController {
   static async createOrg(req, res) {
-    const { telefone, email, password, name } = req.body;
+    const { telefone, email, senha, nome } = req.body;
 
-    if (!telefone || !email || !password || !name) {
+    if (!telefone || !email || !senha || !nome) {
       return res
         .status(400)
         .json({ error: "Todos os campos devem ser preenchidos" });
@@ -17,11 +17,11 @@ module.exports = class orgController {
     }
     else{
       // Construção da query INSERT
-      const query = `INSERT INTO organizador (telefone, password, email, name) VALUES(
+      const query = `INSERT INTO organizador (telefone, senha, email, nome) VALUES(
       '${telefone}',
-      '${password}',
+      '${senha}',
       '${email}',
-      '${name}')`;
+      '${nome}')`;
       // Executando a query criada
       try{
         connect.query(query, function(err){
@@ -45,45 +45,79 @@ module.exports = class orgController {
   }
 
   static async getAllOrgs(req, res) {
-    return res.status(200).json({ message: "Obtendo todos os usuários", Orgs });
+    const query = `SELECT * FROM organizador`;
+    try{
+      connect.query(query, function(err,results){
+        if(err){
+          console.log(err);
+          return res.status(500).json({error:"Erro Interno do Servidor"})
+        }
+        return res.status(200).json({message:"Lista de Organizador",orgs: results})
+      })
+    }
+    catch(error){
+      console.error("Erro ao executar consulta", error)
+      return res.status(500).json({error:"Erro interno do servidor"});
+    }
   }
 
   static async deleteOrg(req, res) {
-    //Obtem o parametro 'id' da requisição, que é o CPF do user a ser deletado
-    const orgId = req.params.id_organizador;
+    const orgId = req.params.id;
+    const query = `DELETE FROM organizador WHERE id_organizador = ?`;
+    const values = [orgId]
 
-    // Procurar o indice do Usuario no Array 'users' pelo cpf
-    const orgIndex = Orgs.findIndex((org) => org.id_organizador === orgId);
-    //Se o usuario não for encontrado userIndex equivale a -1
-    if (orgIndex == -1) {
-      return res.status(400).json({ error: "Usuario não encontrado" });
+    try{
+      connect.query(query,values,function(err,results){
+        if(err){
+          console.error(err);
+          return res.status(500).json({error:"Erro interno do servidor"});
+        }
+        if(results.affectedRows === 0){
+          return res.status(404).json({error:"Organizador não encontrado"})
+        }
+        return res.status(200).json({message:"Organizador excluido com sucesso!!"});
+      })
     }
-    //Removendo o usuario do Array 'users'
-    Orgs.splice(orgIndex, 1);
-
-    return res.status(200).json({ message: "Usuario Apagado com SUCESSO!!!" });
+    catch(error){
+      console.error(error);
+      return res.status(500).json({error:"Erro interno do servidor"})
+    }
   }
 
 
   static async updateOrg(req, res) {
   // Desestrutura e recupera os dados enviados via corpo da requisição
-  const {id, telefone, email, password, name } = req.body;
+  const {id, telefone, email, senha, nome } = req.body;
 
   // Validar se todos os campos foram preenchidos
-  if(!id || !telefone || !email || !password || !name) {
+  if(!id || !telefone || !email || !senha || !nome) {
       return res.status(400).json({error:"Todos os campos devem ser preenchidos"});
   }
-  //Procurar o indice do user no Array 'orgs' pelo id
-  const orgIndex = Orgs.findIndex(org => org.id == id)
-  //Se o usuário não for encontrado userIndex equivale a -1
-  if(orgIndex === -1){
-      return res.status(400).json({error: "Usuário não encontrado"});
-  }
 
-  //Atualiza os dados do usuário no Array 'users'
-  Orgs[orgIndex] = {id, telefone, email, password, name }
-  
-  return res.status(200).json({message: "Usuário atualizado"})
+  const query = `UPDATE organizador SET nome=?,email=?,senha=?,telefone=? WHERE id_organizador = ?`;
+  const values =[nome,email,senha,telefone,id]
+
+  try{
+    connect.query(query,values,function(err,results){
+      if(err){
+        if(err.code === "ER_DUP_ENTRY"){
+          res.status(400).json({error:"Email já cadastrado por outro organizador"});
+        }
+        else{
+          console.error(err);
+          res.status(500).json({error:"Erro interno do servidor"});
+        }
+      }
+      if(results.affectedRows === 0){
+        return res.status(404).json({error:"Organizador não encontrado"});
+      }
+      return res.status(200).json({message:"Organizador foi atualizado com sucesso!!"});
+    })
+  }
+  catch(error){
+    console.error("Erro ao executar consulta",error);
+    return res.status(500).json({error:"Erro interno do servidor"})
+  }
 }
 
 }
