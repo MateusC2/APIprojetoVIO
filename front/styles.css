@@ -156,7 +156,8 @@ table {
   margin-top: 20px; /* Espaçamento superior */
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ddd; /* Borda cinza clara */
   padding: 8px; /* Espaçamento interno */
   text-align: left; /* Alinhamento à esquerda */

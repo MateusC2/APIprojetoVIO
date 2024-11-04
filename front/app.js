@@ -2,11 +2,8 @@
 document
   .getElementById("formulario-registro")
   .addEventListener("submit", createUser);
-
 document.addEventListener("DOMContentLoaded", getAllUsers);
-
 document.addEventListener("DOMContentLoaded", getAllUsersTable);
-
 document.addEventListener("DOMContentLoaded", getAllOrganizadoresTable);
 
 function createUser(event) {
