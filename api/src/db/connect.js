@@ -1,4 +1,4 @@
-const mysql = require('mysql2')
+const mysql = require('mysql2');
 
 const pool = mysql.createPool({
     connectionLimit:10,
@@ -8,5 +8,4 @@ const pool = mysql.createPool({
     database:'vio'
 })
 
-
-module.exports = pool; 
+module.exports = pool;

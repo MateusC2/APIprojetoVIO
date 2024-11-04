@@ -1,13 +1,14 @@
 const express = require("express"); //Importa o módulo Express
 const cors = require("cors");
-const testConnnect = require('./db/testConnect')
+const testConnect = require('./db/testConnect');
+
 class AppController {
   //Define uma classe para organizar a lógica da aplicação
   constructor() {
     this.express = express(); //Cria uma nova instância do Express dentro da classe
     this.middlewares(); //Chama o método middlewares para configurar os middlewares
     this.routes(); //Chama o método routes para definir as rotas da API
-    testConnnect();
+    testConnect();
   }
 
   middlewares() {
@@ -17,8 +18,8 @@ class AppController {
   }
 
   routes() {
-    const apiRoutes = require("./routes/apiRoutes");
-    this.express.use("/api/v1/", apiRoutes); // Definição da URL Base
+    const apiRoutes= require('./routes/apiRoutes')
+    this.express.use('/api/v1/',apiRoutes);// Definição da URL Base
   }
 }
 
