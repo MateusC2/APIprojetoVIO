@@ -1,0 +1,26 @@
+curl --location 'http://10.89.240.86:5000/api/v1/ingresso' \
+--header 'Content-Type: application/json' \
+--data '{
+    "preco": "300",
+    "tipo": "Pista",
+    "fk_id_evento":3
+}'
+
+
+curl --location --request PUT 'http://10.89.240.86:5000/api/v1/ingresso' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id_ingresso":1,
+    "preco": "700",
+    "tipo": "VIP",
+    "fk_id_evento":3
+}'
+
+
+curl --location --request GET 'http://10.89.240.86:5000/api/v1/ingresso' \
+--header 'Content-Type: application/json' \
+
+
+
+curl --location --request DELETE 'http://10.89.240.86:5000/api/v1/ingresso/1' \
+--header 'Content-Type: application/json' \

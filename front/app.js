@@ -1,10 +1,12 @@
 //Chamada da função createUser para a associação ao evento de envio a formulário
-document
-  .getElementById("formulario-registro")
-  .addEventListener("submit", createUser);
-document.addEventListener("DOMContentLoaded", getAllUsers);
-document.addEventListener("DOMContentLoaded", getAllUsersTable);
-document.addEventListener("DOMContentLoaded", getAllOrganizadoresTable);
+document.getElementById("formulario-registro").addEventListener("submit", createUser);
+
+document.addEventListener("DOMContentLoaded", getAllUsers)
+
+document.addEventListener("DOMContentLoaded", getAllUsersTable)
+
+document.addEventListener("DOMContentLoaded", getAllOrgsTable)  
+
 
 function createUser(event) {
   //Previne o comportamento padrao do formulario, ou seja, impede que ele seja enviado e recarregue a pagona
@@ -58,48 +60,49 @@ function createUser(event) {
     });
 } //Fechamento createUser
 
-function getAllUsers() {
-  fetch("http:10.89.240.3:5000/api/v1/user/", {
+function getAllUsers(){
+  fetch("http:10.89.240.3:5000/api/v1/user/",{
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-    },
+    }
   })
     .then((response) => {
-      if (response.ok) {
+      if(response.ok) {
         return response.json();
       }
       return response.json().then((err) => {
         throw new Error(err.error);
       });
     })
-    .then((data) => {
-      const userList = document.getElementById("user-list");
-      userList.innerHTML = ""; //Limpa a lista existente
+      .then((data) => {
+        const userList = document.getElementById("user-list");
+        userList.innerHTML = ""; //Limpa a lista existente
 
-      data.users.forEach((user) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `Nome: ${user.name},
+        data.users.forEach((user)=>{
+          const listItem = document.createElement("li");
+          listItem.textContent = `Nome: ${user.name},
           CPF: ${user.cpf}, 
-          Email ${user.email}`;
-        userList.appendChild(listItem);
-      });
-    })
-    .catch((error) => {
-      alert("Erro ao obter usuários: " + error.message);
-      console.error("Erro: ", error.message);
-    });
+          Email ${user.email}`
+          userList.appendChild(listItem);
+        })
+
+      })
+      .catch((error)=>{
+        alert("Erro ao obter usuários: " + error.message);
+        console.error("Erro: ", error.message);
+      })
 }
 
-function getAllUsersTable() {
-  fetch("http:10.89.240.3:5000/api/v1/user/", {
+function getAllUsersTable(){
+  fetch("http://10.89.240.3:5000/api/v1/user/",{
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-    },
+    }
   })
     .then((response) => {
-      if (response.ok) {
+      if(response.ok) {
         return response.json();
       }
       return response.json().then((err) => {
@@ -112,7 +115,7 @@ function getAllUsersTable() {
       userList.innerHTML = "";
 
       //Verifica se há usuários retornados e os adiciona á tabela
-      data.users.forEach((usuario) => {
+      data.users.forEach((usuario) =>{
         //Cria uma nova linha
         const tr = document.createElement("tr");
 
@@ -121,14 +124,15 @@ function getAllUsersTable() {
         tdName.textContent = usuario.name;
         tr.appendChild(tdName);
 
+        const tdcpf = document.createElement("td");
+        tdcpf.textContent = usuario.cpf;
+        tr.appendChild(tdcpf);
+
         const tdEmail = document.createElement("td");
         tdEmail.textContent = usuario.email;
         tr.appendChild(tdEmail);
 
-        //cria célular para nome, cpf e email
-        const tdcpf = document.createElement("td");
-        tdcpf.textContent = usuario.cpf;
-        tr.appendChild(tdcpf);
+
         //Adiciona a linha á tabela
         userList.appendChild(tr);
       });
@@ -136,18 +140,18 @@ function getAllUsersTable() {
     .catch((error) => {
       alert("Erro ao obter usuários: " + error.message);
       console.error("Erro: ", error.message);
-    });
+    })
 }
 
-function getAllOrganizadoresTable() {
-  fetch("http:10.89.240.3:5000/api/v1/organizador/", {
+function getAllOrgsTable(){
+  fetch("http://10.89.240.3:5000/api/v1/organizador",{
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-    },
+    }
   })
     .then((response) => {
-      if (response.ok) {
+      if(response.ok) {
         return response.json();
       }
       return response.json().then((err) => {
@@ -160,7 +164,7 @@ function getAllOrganizadoresTable() {
       orgList.innerHTML = "";
 
       //Verifica se há usuários retornados e os adiciona á tabela
-      data.organizadores.forEach((organizadores) => {
+      data.organizadores.forEach((organizadores) =>{
         //Cria uma nova linha
         const tr = document.createElement("tr");
 
@@ -169,20 +173,21 @@ function getAllOrganizadoresTable() {
         tdNome.textContent = organizadores.nome;
         tr.appendChild(tdNome);
 
+        const tdtelefone = document.createElement("td");
+        tdtelefone.textContent = organizadores.telefone;
+        tr.appendChild(tdtelefone);
+
         const tdEmail = document.createElement("td");
         tdEmail.textContent = organizadores.email;
         tr.appendChild(tdEmail);
 
-        //cria célular para nome, cpf e email
-        const tdtelefone = document.createElement("td");
-        tdtelefone.textContent = organizadores.telefone;
-        tr.appendChild(tdtelefone);
+
         //Adiciona a linha á tabela
         orgList.appendChild(tr);
       });
     })
     .catch((error) => {
-      alert("Erro ao obter usuários: " + error.message);
+      alert("Erro ao obter Organizadores: " + error.message);
       console.error("Erro: ", error.message);
-    });
+    })
 }

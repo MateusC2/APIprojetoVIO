@@ -115,6 +115,7 @@ footer {
   bottom: 0; /* Posiciona o rodapé na parte inferior da página */
 }
 
+/*TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE*/
 /* Estilos da seção de usuários cadastrados */
 #user-list {
   list-style: none; /* Remove os marcadores da lista */
@@ -130,7 +131,11 @@ footer {
 section h2 {
   color: #00796b; /* Cor específica para o título */
   margin-bottom: 15px; /* Espaçamento inferior */
+}
+
+.h2-lista{
   text-align: center;
+  left: 10px;
 }
 
 /* Estilo de cada item da lista de usuários */
@@ -149,6 +154,7 @@ section h2 {
   background-color: #f1f1f1; /* Altera a cor de fundo ao passar o mouse */
 }
 
+/*asaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*/
 /*Tabela*/
 table {
   width: 100%; /* Largura total da tabela */
@@ -156,8 +162,7 @@ table {
   margin-top: 20px; /* Espaçamento superior */
 }
 
-th,
-td {
+th, td {
   border: 1px solid #ddd; /* Borda cinza clara */
   padding: 8px; /* Espaçamento interno */
   text-align: left; /* Alinhamento à esquerda */
@@ -175,3 +180,5 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #ddd; /* Cor de fundo ao passar o mouse */
 }
+
+

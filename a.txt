@@ -1,0 +1,39 @@
+create database vio_mateus;
+-- vio (venda de ingressos online)
+
+use vio_mateus;
+
+create table usuario (
+    id_usuario int auto_increment primary key,
+    name varchar(100) not null,
+    email varchar(100) not null unique,
+    password varchar(50) not null,
+    cpf char(11) not null,
+    data_nascimento date not null
+);
+
+create table organizador (
+	id_organizador int auto_increment primary key,
+	nome varchar(100) not null,
+	email varchar(100) not null unique,
+	senha varchar(50) not null,
+	telefone char(11) not null
+);
+
+create table evento (
+    id_evento int auto_increment primary key,
+    nome varchar(100) not null,
+    descricao varchar(255) not null,
+    data_hora datetime not null,
+    local varchar(255) not null,
+    fk_id_organizador int not null,
+    foreign key (fk_id_organizador) references organizador(id_organizador)
+);
+
+create table ingresso (
+    id_ingresso int auto_increment primary key,
+    preco decimal(5,2) not null,
+    tipo varchar(10) not null,
+    fk_id_evento int not null,
+    foreign key (fk_id_evento) references evento(id_evento)
+);

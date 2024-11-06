@@ -54,7 +54,7 @@ module.exports = class userController {
       connect.query(query, function (err, results) {
         if (err) {
           console.error(err);
-          return req.status(500).json({ error: "Erro interno do Servidor" });
+          return res.status(500).json({ error: "Erro interno do Servidor" });
         }
         return res
           .status(200)
