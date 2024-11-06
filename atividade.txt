@@ -1,9 +1,9 @@
 curl --location 'http://10.89.240.86:5000/api/v1/ingresso' \
 --header 'Content-Type: application/json' \
 --data '{
-    "preco": "300",
-    "tipo": "Pista",
-    "fk_id_evento":3
+    "preco": "600",
+    "tipo": "VIP",
+    "fk_id_evento":1
 }'
 
 

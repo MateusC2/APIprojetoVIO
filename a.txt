@@ -1,5 +1,6 @@
 create database vio_mateus;
 -- vio (venda de ingressos online)
+create database vio_mateus;
 
 use vio_mateus;
 
