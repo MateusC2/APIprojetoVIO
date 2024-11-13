@@ -22,6 +22,8 @@ router.delete('/organizador/:id', orgController.deleteOrganizador);
 //Rotas eventoController
 router.post('/evento', eventoController.createEvento);
 router.get('/evento', eventoController.getAllEventos);
+router.get('/evento/data', eventoController.getEventosPorData);
+router.get('/evento/7dias/:dataInicial', eventoController.getEventosProximos7Dias);
 router.put('/evento', eventoController.updateEvento);
 router.delete('/evento/:id', eventoController.deleteEvento);
 

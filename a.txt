@@ -38,3 +38,12 @@ create table ingresso (
     fk_id_evento int not null,
     foreign key (fk_id_evento) references evento(id_evento)
 );
+
+
+
+
+
+insert into evento (nome, data_hora, local, descricao, fk_id_organizador) values
+    ('Festa do Ovo', '2024-11-07', 'Praia Central', 'evento de verao', '1'),
+    ('Festa do Abacaxi', '2024-11-04', 'Centro de convencoes', 'Evento de tecnologia', '2'),
+    ('Show do Dj fabin', '2024-11-01', 'Arena Principal', 'Evento internacional', '3');
