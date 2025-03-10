@@ -1,19 +1,21 @@
 const connect = require("../db/connect");
+const validateUser = require("../services/validateUser")
+const validateCpf = require("../services/validateCpf")
 module.exports = class userController {
   static async createUser(req, res) {
     const { cpf, email, password, name, data_nascimento } = req.body;
+    
+    
+    const validationError = validateUser(req.body);
+    if(validation){
+      return res.status(400).json(validation)
+    }
+    const cpfValidation = await validateCpf(cpf,null)
+    if(cpfValidation){
+      return res.status(400).json(cpfValidation)
+    }
+    
 
-    if (!cpf || !email || !password || !name || !data_nascimento) {
-      return res
-        .status(400)
-        .json({ error: "Todos os campos devem ser preenchidos" });
-    } else if (isNaN(cpf) || cpf.length !== 11) {
-      return res.status(400).json({
-        error: "CPF inválido. Deve conter exatamente 11 dígitos numéricos",
-      });
-    } else if (!email.includes("@")) {
-      return res.status(400).json({ error: "Email inválido. Deve conter @" });
-    } else {
       // Construção da query INSERT
       const query = `INSERT INTO usuario (cpf, password, email, name, data_nascimento) VALUES(
     '${cpf}',
@@ -46,7 +48,6 @@ module.exports = class userController {
         console.error(error);
         res.status(500).json({ error: "Erro interno do servidor" });
       }
-    }
   }
 
   static async getAllUsers(req, res) {
@@ -70,14 +71,16 @@ module.exports = class userController {
 
   static async updateUser(req, res) {
     // Desestrutura e recupera os dados enviados via corpo da requisição
-    const { id, cpf, email, password, name } = req.body;
-
-    // Validar se todos os campos foram preenchidos
-    if (!id || !cpf || !email || !password || !name) {
-      return res
-        .status(400)
-        .json({ error: "Todos os campos devem ser preenchidos" });
+    const validation = validateUser(req.body);
+    if(validation){
+      return res.status(400).json(validation)
     }
+    const cpfValidation = await validateCpf(cpf,id)
+    if(cpfValidation){
+      return res.status(400).json(cpfValidation)
+    }
+    
+    
     const query = `UPDATE usuario SET cpf=?, email=?, password=?, name=? WHERE id_usuario = ?`;
     const values = [cpf, email, password, name, id];
 
