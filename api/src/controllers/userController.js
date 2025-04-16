@@ -113,11 +113,11 @@ module.exports = class userController {
       connect.query(query, values, function (err, results) {
         if (err) {
           console.error(err);
-          return res.status(500).json({ error: "Erro interno do servidor" });
+          return res.status(500).json({ message: "Erro interno do servidor" }); 
         }
-
+        
         if (results.affectedRows === 0) {
-          return res.status(404).json({ error: "Usuário não encontrado" });
+          return res.status(404).json({ message: "Usuário não encontrado" });
         }
 
         return res
