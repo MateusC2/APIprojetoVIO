@@ -90,10 +90,10 @@ static async updateEvento(req, res) {
       connect.query(query, values, function (err, results) {
         if (err) {
           console.error(err);
-          return res.status(500).json({ error: "Erro ao excluir Evento" });
+          return res.status(500).json({ message: "Erro ao excluir Evento" });
         }
         if (results.affectedRows === 0) {
-          return res.status(404).json({ error: "Evento não encontrado" });
+          return res.status(404).json({ message: "Evento não encontrado" });
         }
         return res.status(200).json({ message: "Evento excluído com sucesso" });
       });
