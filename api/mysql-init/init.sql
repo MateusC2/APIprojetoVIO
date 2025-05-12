@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `vio_mateus` /*!40100 DEFAULT CHARACTER SET utf8m
 USE `vio_mateus`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: vio_miguel
+-- Host: localhost    Database: vio_mateus
 -- ------------------------------------------------------
 -- Server version	8.0.36
 
@@ -31,7 +31,7 @@ CREATE TABLE `compra` (
   PRIMARY KEY (`id_compra`),
   KEY `fk_id_usuario` (`fk_id_usuario`),
   CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`fk_id_usuario`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `compra` (
 
 LOCK TABLES `compra` WRITE;
 /*!40000 ALTER TABLE `compra` DISABLE KEYS */;
-INSERT INTO `compra` VALUES (1,'2024-11-14 19:04:00',1),(2,'2024-11-13 17:00:00',1),(3,'2024-11-12 15:30:00',2),(4,'2024-11-11 14:20:00',2);
+INSERT INTO `compra` VALUES (1,'2024-11-14 19:04:00',1),(2,'2024-11-13 17:00:00',1),(3,'2024-11-12 15:30:00',2),(4,'2024-11-11 14:20:00',2),(5,'2025-05-12 10:50:17',3),(6,'2025-05-12 10:50:28',3),(7,'2025-05-12 13:09:47',4),(8,'2025-05-12 13:10:40',4),(9,'2025-05-12 13:11:09',4),(10,'2025-05-12 13:11:12',4),(11,'2025-05-12 13:19:01',7),(12,'2025-05-12 13:23:26',7),(13,'2025-05-12 13:23:41',7);
 /*!40000 ALTER TABLE `compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +78,7 @@ CREATE TABLE `evento` (
   PRIMARY KEY (`id_evento`),
   KEY `fk_id_organizador` (`fk_id_organizador`),
   CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`fk_id_organizador`) REFERENCES `organizador` (`id_organizador`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,9 +87,29 @@ CREATE TABLE `evento` (
 
 LOCK TABLES `evento` WRITE;
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
-INSERT INTO `evento` VALUES (1,'Festival de Verão','evento de verao','2024-12-15 00:00:00','Praia Central',1),(2,'Congresso de Tecnologia','Evento de tecnologia','2024-11-20 00:00:00','Centro de convencoes',2),(3,'Show Internacional','Evento internacional','2024-10-30 00:00:00','Arena Principal',3);
+INSERT INTO `evento` VALUES (1,'Festival de Verão','evento de verao','2024-12-15 00:00:00','Praia Central',1),(2,'Congresso de Tecnologia','Evento de tecnologia','2024-11-20 00:00:00','Centro de convencoes',2),(3,'Show Internacional','Evento internacional','2024-10-30 00:00:00','Arena Principal',3),(4,'Feira Cultural de Inverno','Evento Cultural com musicas e gastronomia','2025-07-20 18:00:00','Teatro Central',1);
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`alunods`@`%`*/ /*!50003 TRIGGER `impedir_alteracao_evento` BEFORE UPDATE ON `evento` FOR EACH ROW begin
+    if old.data_hora < curdate() then
+        signal sqlstate '45000'
+            set message_text = 'Não é permitido alterar eventos que ocorreram';
+    end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `ingresso`
@@ -106,7 +126,7 @@ CREATE TABLE `ingresso` (
   PRIMARY KEY (`id_ingresso`),
   KEY `fk_id_evento` (`fk_id_evento`),
   CONSTRAINT `ingresso_ibfk_1` FOREIGN KEY (`fk_id_evento`) REFERENCES `evento` (`id_evento`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +135,7 @@ CREATE TABLE `ingresso` (
 
 LOCK TABLES `ingresso` WRITE;
 /*!40000 ALTER TABLE `ingresso` DISABLE KEYS */;
-INSERT INTO `ingresso` VALUES (1,500.00,'vip',1),(2,150.00,'pista',1),(3,200.00,'pista',2),(4,600.00,'vip',3),(5,250.00,'pista',3);
+INSERT INTO `ingresso` VALUES (1,500.00,'vip',1),(2,150.00,'pista',1),(3,200.00,'pista',2),(4,600.00,'vip',3),(5,250.00,'pista',3),(6,120.00,'VIP',4),(7,60.00,'VIP',4);
 /*!40000 ALTER TABLE `ingresso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +156,7 @@ CREATE TABLE `ingresso_compra` (
   KEY `fk_id_compra` (`fk_id_compra`),
   CONSTRAINT `ingresso_compra_ibfk_1` FOREIGN KEY (`fk_id_ingresso`) REFERENCES `ingresso` (`id_ingresso`),
   CONSTRAINT `ingresso_compra_ibfk_2` FOREIGN KEY (`fk_id_compra`) REFERENCES `compra` (`id_compra`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,8 +165,61 @@ CREATE TABLE `ingresso_compra` (
 
 LOCK TABLES `ingresso_compra` WRITE;
 /*!40000 ALTER TABLE `ingresso_compra` DISABLE KEYS */;
-INSERT INTO `ingresso_compra` VALUES (1,5,4,1),(2,2,5,1),(3,1,1,2),(4,2,2,2);
+INSERT INTO `ingresso_compra` VALUES (1,5,4,1),(2,2,5,1),(3,1,1,2),(4,2,2,2),(5,3,5,5),(6,3,5,6),(8,2,6,13);
 /*!40000 ALTER TABLE `ingresso_compra` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`alunods`@`%`*/ /*!50003 TRIGGER `verifica_data_evento` BEFORE INSERT ON `ingresso_compra` FOR EACH ROW begin
+    declare data_evento datetime;
+
+    -- buscar data do evento
+    select e.data_hora into data_evento
+    from ingresso i join evento e on i.fk_id_evento = e.id_evento
+    where i.id_ingresso = new.fk_id_ingresso;
+
+    -- Verificar se o evento já ocorreu
+    if date(data_evento) < curdate() then
+        signal sqlstate '45000' 
+        set message_text = 'Não é possível comprar ingressos para eventos passados.';
+    end if;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `log_evento`
+--
+
+DROP TABLE IF EXISTS `log_evento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `log_evento` (
+  `id_log` int NOT NULL AUTO_INCREMENT,
+  `mensagem` varchar(255) DEFAULT NULL,
+  `data_log` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_log`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log_evento`
+--
+
+LOCK TABLES `log_evento` WRITE;
+/*!40000 ALTER TABLE `log_evento` DISABLE KEYS */;
+INSERT INTO `log_evento` VALUES (1,'Teste de log','2025-05-12 10:48:52'),(2,'Teste de log 2','2025-05-12 10:49:14');
+/*!40000 ALTER TABLE `log_evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -194,7 +267,7 @@ CREATE TABLE `presenca` (
   KEY `fk_id_compra` (`fk_id_compra`),
   CONSTRAINT `presenca_ibfk_1` FOREIGN KEY (`fk_id_evento`) REFERENCES `evento` (`id_evento`),
   CONSTRAINT `presenca_ibfk_2` FOREIGN KEY (`fk_id_compra`) REFERENCES `compra` (`id_compra`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,6 +276,7 @@ CREATE TABLE `presenca` (
 
 LOCK TABLES `presenca` WRITE;
 /*!40000 ALTER TABLE `presenca` DISABLE KEYS */;
+INSERT INTO `presenca` VALUES (1,'2025-05-12 10:41:01',3,1);
 /*!40000 ALTER TABLE `presenca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,11 +311,11 @@ INSERT INTO `usuario` VALUES (1,'João Silva','joao.silva@example.com','senha123
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'vio_miguel'
+-- Dumping events for database 'vio_mateus'
 --
 
 --
--- Dumping routines for database 'vio_miguel'
+-- Dumping routines for database 'vio_mateus'
 --
 /*!50003 DROP FUNCTION IF EXISTS `buscar_faixa_etaria_usuario` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -566,6 +640,19 @@ CREATE DEFINER=`alunods`@`%` PROCEDURE `registrar_compra`(
 )
 begin
     declare v_id_compra int;
+    declare v_data_evento datetime;
+    
+    -- obtem a data do evento
+    select e.data_hora into v_data_evento
+    from ingresso i
+    join evento e on i.fk_id_evento = e.id_evento
+    where i.id_ingresso = p_id_ingresso;
+    
+    -- verificar se a data do evento é menor que a a atual
+    if date(v_data_evento) < curdate() then
+		signal sqlstate '45000'
+        set message_text = 'ERRO_PROCEDURE - Não é possivel comprar ingressos para eventos passados';
+	end if;
 
     -- criar registro na tabela 'compra'
     insert into compra(data_compra, fk_id_usuario)
@@ -710,10 +797,10 @@ DELIMITER ;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`alunods`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `compras_por_usuario` (`usuario`,`evento`,`data_compra`,`tipo_ingresso`,`quantidade_vip`,`preco_total`) AS select `u`.`name` AS `Usuario`,`e`.`nome` AS `Evento`,`c`.`data_compra` AS `Data_compra`,`i`.`tipo` AS `Tipo_Ingresso`,sum((case when (`i`.`tipo` = 'vip') then `ic`.`quantidade` else 0 end)) AS `Quantidade_VIP`,round(sum((`ic`.`quantidade` * `i`.`preco`)),2) AS `Preco_Total` from ((((`usuario` `u` join `compra` `c` on((`u`.`id_usuario` = `c`.`fk_id_usuario`))) join `ingresso_compra` `ic` on((`c`.`id_compra` = `ic`.`fk_id_compra`))) join `ingresso` `i` on((`ic`.`fk_id_ingresso` = `i`.`id_ingresso`))) join `evento` `e` on((`i`.`fk_id_evento` = `e`.`id_evento`))) group by `u`.`name`,`e`.`nome`,`c`.`data_compra`,`i`.`tipo` */;
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `compras_por_usuario` AS select 1 AS `usuario`,1 AS `evento`,1 AS `data_compra`,1 AS `tipo_ingresso`,1 AS `quantidade_vip`,1 AS `preco_total` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -727,4 +814,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-14 13:52:56
+-- Dump completed on 2025-05-12 14:10:13

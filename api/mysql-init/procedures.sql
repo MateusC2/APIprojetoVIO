@@ -41,7 +41,7 @@ end; //
 
 delimiter ;
 
-show procedure status where db = 'vio_miguel';
+show procedure status where db = 'vio_mateus';
 
 set @total = 0;
 
@@ -62,7 +62,7 @@ delimiter ;
 
 
 call registrar_presenca(1, 3);  
-drop procedure registrar_presenca;
+-- drop procedure registrar_presenca;
 
 -- PROCEDURE PARA O RESUMO DO USUÁRIO (ATIVIDADE)
 delimiter $$
