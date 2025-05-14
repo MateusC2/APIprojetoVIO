@@ -22,12 +22,12 @@ router.delete('/organizador/:id', orgController.deleteOrganizador);
 
 //Rotas eventoController
 router.post('/evento', eventoController.createEvento);
-router.get('/evento', eventoController.getAllEventos);
+router.get('/evento',verifyJMT, eventoController.getAllEventos);
 router.put('/evento', eventoController.updateEvento);
 router.delete('/evento/:id', eventoController.deleteEvento);
 //Rotas para manipular data
-router.get('/evento/data', eventoController.getEventosPorData);
-router.get("/evento/:data", eventoController.getEventosData7Dias);
+router.get('/evento/data',verifyJMT, eventoController.getEventosPorData);
+router.get("/evento/:data",verifyJMT, eventoController.getEventosData7Dias);
 
 
 //Rotas ingressoController
@@ -35,7 +35,7 @@ router.post('/ingresso', ingressoController.createIngresso);
 router.get('/ingresso', ingressoController.getAllIngressos);
 router.put('/ingresso', ingressoController.updateIngresso);
 router.delete('/ingresso/:id', ingressoController.deleteIngresso);
-router.get('/ingresso/evento/:id', ingressoController.getByIdEvento)
+router.get('/ingresso/evento/:id',verifyJMT, ingressoController.getByIdEvento)
 
 
 module.exports = router
