@@ -1,7 +1,7 @@
-CREATE TABLE resumo_evento (
-    id_evento INT PRIMARY KEY,
-    total_ingressos INT
-);
+    CREATE TABLE resumo_evento (
+        id_evento INT PRIMARY KEY,
+        total_ingressos INT
+    );
 
 DELIMITER //
 CREATE TRIGGER atualizar_total_ingressos

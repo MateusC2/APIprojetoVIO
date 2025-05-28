@@ -22,7 +22,7 @@ create function status_sistema()
 returns varchar(50)
 no sql
 begin
-    return 'Sistem Funcionando Normalmente';
+    return 'Sistema Funcionando Normalmente';
 end; $$
 delimiter ;
 
