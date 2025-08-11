@@ -584,3 +584,4 @@ DELIMITER ;
 -- Dump completed on 2025-05-12 14:09:42
 
 ALTER TABLE evento ADD imagem LONGBLOB;
+ALTER TABLE evento ADD tipo_Imagem VARCHAR(100);
