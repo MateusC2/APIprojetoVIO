@@ -9,7 +9,7 @@ const pool = mysql.createPool({
     // database:'vio_mateus'
     host:process.env.MYSQLHOST || process.env.DB_HOST, 
     user:process.env.MYSQLUSER || process.env.DB_USER,
-    password:MYSQLPASSWORD || process.env.DB_PASSWORD,
+    password:process.env.MYSQLPASSWORD || process.env.DB_PASSWORD,
     database:process.env.DATABASE || process.env.DB_NAME,
     port:process.env.MYSQLPORT || 3306
 })
