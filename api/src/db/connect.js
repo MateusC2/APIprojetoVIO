@@ -7,10 +7,11 @@ const pool = mysql.createPool({
     // user:'alunods',
     // password:'senai@604',
     // database:'vio_mateus'
-    host:process.env.DB_HOST,
-    user:process.env.DB_USER,
-    password:process.env.DB_PASSWORD,
-    database:process.env.DB_NAME,
+    host:process.env.MYSQLHOST || process.env.DB_HOST, 
+    user:process.env.MYSQLUSER || process.env.DB_USER,
+    password:MYSQLPASSWORD || process.env.DB_PASSWORD,
+    database:process.env.DATABASE || process.env.DB_NAME,
+    port:process.env.MYSQLPORT || 3306
 })
 
 module.exports = pool;
